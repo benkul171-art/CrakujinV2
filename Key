@@ -1,0 +1,51 @@
+-- CRACKUJIN - Simple Key System
+local key = "CRACKUJIN2026"
+
+local gui = Instance.new("ScreenGui")
+gui.Parent = game:GetService("CoreGui")
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 300, 0, 150)
+frame.Position = UDim2.new(0.5, -150, 0.5, -75)
+frame.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+frame.Parent = gui
+
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, 0, 0, 40)
+title.Text = "CRACKUJIN"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.Parent = frame
+
+local box = Instance.new("TextBox")
+box.Size = UDim2.new(0.8, 0, 0, 35)
+box.Position = UDim2.new(0.1, 0, 0, 50)
+box.PlaceholderText = "Enter Key"
+box.TextColor3 = Color3.fromRGB(255, 255, 255)
+box.Parent = frame
+
+local btn = Instance.new("TextButton")
+btn.Size = UDim2.new(0.5, 0, 0, 35)
+btn.Position = UDim2.new(0.25, 0, 0, 100)
+btn.Text = "ACTIVATE"
+btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+btn.Parent = frame
+
+btn.MouseButton1Click:Connect(function()
+    if box.Text == key then
+        -- Load main script
+        local success, err = pcall(function()
+            local script = game:HttpGet("https://raw.githubusercontent.com/benkul171-art/Crackujin/refs/heads/main/Main")
+            loadstring(script)()
+        end)
+        if success then
+            gui:Destroy()
+        else
+            box.PlaceholderText = "Error: " .. tostring(err)
+        end
+    else
+        box.Text = ""
+        box.PlaceholderText = "WRONG KEY!"
+    end
+end)
+
+print("Crackujin Key System - Enter key to continue")
