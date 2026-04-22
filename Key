@@ -1,51 +1,211 @@
--- CRACKUJIN - Simple Key System
-local key = "CRACKUJIN2026"
+-- CRACKUJIN - Yabujin Style Key System
+-- Key: CRACKUJIN.KEYLOGIN
+local player = game.Players.LocalPlayer
+local CORRECT_KEY = "CRACKUJIN.KEYLOGIN"
 
+-- Main script URL (upload your Main script here)
+local MAIN_SCRIPT_URL = "https://raw.githubusercontent.com/benkul171-art/CrakujinV2/refs/heads/main/Main"
+
+-- Create GUI
 local gui = Instance.new("ScreenGui")
+gui.Name = "CrackujinKey"
 gui.Parent = game:GetService("CoreGui")
 
-local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 300, 0, 150)
-frame.Position = UDim2.new(0.5, -150, 0.5, -75)
-frame.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
-frame.Parent = gui
+-- Main Window
+local window = Instance.new("Frame")
+window.Size = UDim2.new(0, 380, 0, 280)
+window.Position = UDim2.new(0.5, -190, 0.5, -140)
+window.BackgroundColor3 = Color3.fromRGB(18, 18, 24)
+window.BackgroundTransparency = 0
+window.BorderSizePixel = 0
+window.Parent = gui
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 12)
+corner.Parent = window
+
+local stroke = Instance.new("UIStroke")
+stroke.Color = Color3.fromRGB(255, 80, 200)
+stroke.Thickness = 2
+stroke.Parent = window
+
+-- Title Bar
+local titleBar = Instance.new("Frame")
+titleBar.Size = UDim2.new(1, 0, 0, 45)
+titleBar.BackgroundColor3 = Color3.fromRGB(255, 80, 200)
+titleBar.BackgroundTransparency = 0.2
+titleBar.Parent = window
 
 local title = Instance.new("TextLabel")
-title.Size = UDim2.new(1, 0, 0, 40)
+title.Size = UDim2.new(1, -50, 1, 0)
+title.Position = UDim2.new(0, 15, 0, 0)
+title.BackgroundTransparency = 1
 title.Text = "CRACKUJIN"
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
-title.Parent = frame
+title.TextSize = 22
+title.Font = Enum.Font.GothamBold
+title.TextXAlignment = Enum.TextXAlignment.Left
+title.Parent = titleBar
 
-local box = Instance.new("TextBox")
-box.Size = UDim2.new(0.8, 0, 0, 35)
-box.Position = UDim2.new(0.1, 0, 0, 50)
-box.PlaceholderText = "Enter Key"
-box.TextColor3 = Color3.fromRGB(255, 255, 255)
-box.Parent = frame
+local close = Instance.new("TextButton")
+close.Size = UDim2.new(0, 32, 0, 32)
+close.Position = UDim2.new(1, -40, 0, 6)
+close.BackgroundColor3 = Color3.fromRGB(255, 50, 100)
+close.Text = "✕"
+close.TextColor3 = Color3.fromRGB(255, 255, 255)
+close.TextSize = 16
+close.Font = Enum.Font.GothamBold
+close.Parent = titleBar
+close.MouseButton1Click:Connect(function() gui:Destroy() end)
 
-local btn = Instance.new("TextButton")
-btn.Size = UDim2.new(0.5, 0, 0, 35)
-btn.Position = UDim2.new(0.25, 0, 0, 100)
-btn.Text = "ACTIVATE"
-btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-btn.Parent = frame
+local closeCorner = Instance.new("UICorner")
+closeCorner.CornerRadius = UDim.new(0, 6)
+closeCorner.Parent = close
 
-btn.MouseButton1Click:Connect(function()
-    if box.Text == key then
+-- Key Display (shows what key to enter)
+local keyDisplay = Instance.new("TextLabel")
+keyDisplay.Size = UDim2.new(0.9, 0, 0, 35)
+keyDisplay.Position = UDim2.new(0.05, 0, 0, 60)
+keyDisplay.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+keyDisplay.Text = "KEY: " .. CORRECT_KEY
+keyDisplay.TextColor3 = Color3.fromRGB(255, 100, 200)
+keyDisplay.TextSize = 13
+keyDisplay.Font = Enum.Font.GothamBold
+keyDisplay.Parent = window
+
+local keyDisplayCorner = Instance.new("UICorner")
+keyDisplayCorner.CornerRadius = UDim.new(0, 8)
+keyDisplayCorner.Parent = keyDisplay
+
+-- Instruction
+local instruction = Instance.new("TextLabel")
+instruction.Size = UDim2.new(1, -20, 0, 25)
+instruction.Position = UDim2.new(0, 10, 0, 105)
+instruction.BackgroundTransparency = 1
+instruction.Text = "Enter the key below to activate"
+instruction.TextColor3 = Color3.fromRGB(200, 200, 200)
+instruction.TextSize = 12
+instruction.Font = Enum.Font.Gotham
+instruction.Parent = window
+
+-- Key Input Box
+local keyBox = Instance.new("TextBox")
+keyBox.Size = UDim2.new(0.8, 0, 0, 42)
+keyBox.Position = UDim2.new(0.1, 0, 0, 135)
+keyBox.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+keyBox.Text = ""
+keyBox.PlaceholderText = "Enter key here"
+keyBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+keyBox.PlaceholderColor3 = Color3.fromRGB(150, 150, 160)
+keyBox.TextSize = 14
+keyBox.Font = Enum.Font.Gotham
+keyBox.Parent = window
+
+local boxCorner = Instance.new("UICorner")
+boxCorner.CornerRadius = UDim.new(0, 8)
+boxCorner.Parent = keyBox
+
+-- Copy Button
+local copyBtn = Instance.new("TextButton")
+copyBtn.Size = UDim2.new(0.3, 0, 0, 35)
+copyBtn.Position = UDim2.new(0.35, 0, 0, 190)
+copyBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 120)
+copyBtn.Text = "COPY KEY"
+copyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+copyBtn.TextSize = 12
+copyBtn.Font = Enum.Font.GothamBold
+copyBtn.Parent = window
+
+local copyCorner = Instance.new("UICorner")
+copyCorner.CornerRadius = UDim.new(0, 6)
+copyCorner.Parent = copyBtn
+
+copyBtn.MouseButton1Click:Connect(function()
+    setclipboard(CORRECT_KEY)
+    copyBtn.Text = "COPIED!"
+    wait(1)
+    copyBtn.Text = "COPY KEY"
+end)
+
+-- Status Label
+local statusLabel = Instance.new("TextLabel")
+statusLabel.Size = UDim2.new(1, -20, 0, 25)
+statusLabel.Position = UDim2.new(0, 10, 0, 235)
+statusLabel.BackgroundTransparency = 1
+statusLabel.Text = "Waiting for key..."
+statusLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+statusLabel.TextSize = 12
+statusLabel.Font = Enum.Font.Gotham
+statusLabel.Parent = window
+
+-- Activate Button
+local activateBtn = Instance.new("TextButton")
+activateBtn.Size = UDim2.new(0.5, 0, 0, 42)
+activateBtn.Position = UDim2.new(0.25, 0, 0, 265)
+activateBtn.BackgroundColor3 = Color3.fromRGB(255, 80, 200)
+activateBtn.BackgroundTransparency = 0.2
+activateBtn.Text = "ACTIVATE"
+activateBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+activateBtn.TextSize = 16
+activateBtn.Font = Enum.Font.GothamBold
+activateBtn.Parent = window
+
+local activateCorner = Instance.new("UICorner")
+activateCorner.CornerRadius = UDim.new(0, 8)
+activateCorner.Parent = activateBtn
+
+-- Activate function
+activateBtn.MouseButton1Click:Connect(function()
+    if keyBox.Text == CORRECT_KEY then
+        statusLabel.Text = "✓ KEY VALID! Loading Crackujin..."
+        statusLabel.TextColor3 = Color3.fromRGB(100, 255, 100)
+        activateBtn.Visible = false
+        copyBtn.Visible = false
+        
         -- Load main script
         local success, err = pcall(function()
-            local script = game:HttpGet("https://raw.githubusercontent.com/benkul171-art/Crackujin/refs/heads/main/Main")
-            loadstring(script)()
+            local mainScript = game:HttpGet(MAIN_SCRIPT_URL)
+            loadstring(mainScript)()
         end)
+        
         if success then
             gui:Destroy()
         else
-            box.PlaceholderText = "Error: " .. tostring(err)
+            statusLabel.Text = "✗ Failed to load: " .. tostring(err)
+            statusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+            activateBtn.Visible = true
+            copyBtn.Visible = true
         end
     else
-        box.Text = ""
-        box.PlaceholderText = "WRONG KEY!"
+        statusLabel.Text = "✗ INVALID KEY!"
+        statusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+        keyBox.Text = ""
     end
 end)
 
-print("Crackujin Key System - Enter key to continue")
+-- Make window draggable
+local dragging = false
+local dragStart, startPos
+titleBar.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        dragStart = input.Position
+        startPos = window.Position
+    end
+end)
+titleBar.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = false
+    end
+end)
+game:GetService("UserInputService").InputChanged:Connect(function(input)
+    if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+        local delta = input.Position - dragStart
+        window.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    end
+end)
+
+print("========================================")
+print("CRACKUJIN KEY SYSTEM")
+print("KEY: " .. CORRECT_KEY)
+print("========================================")
