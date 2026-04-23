@@ -1,24 +1,33 @@
--- CRACKUJIN - Yabujin Style Key System
+-- CRACKUJIN - Fixed CoreGui Key System
 -- Key: CRACKUJIN.KEYLOGIN
 local player = game.Players.LocalPlayer
 local CORRECT_KEY = "CRACKUJIN.KEYLOGIN"
 
--- Main script URL (upload your Main script here)
+-- Main script URL (change this to your actual raw GitHub URL)
 local MAIN_SCRIPT_URL = "https://raw.githubusercontent.com/benkul171-art/CrakujinV2/refs/heads/main/Main"
 
--- Create GUI
+-- Create GUI on CoreGui (ALWAYS works)
 local gui = Instance.new("ScreenGui")
-gui.Name = "CrackujinKey"
+gui.Name = "CrackujinKeySystem"
 gui.Parent = game:GetService("CoreGui")
+gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+-- If CoreGui fails, try PlayerGui
+pcall(function()
+    if not gui.Parent then
+        gui.Parent = player:WaitForChild("PlayerGui")
+    end
+end)
 
 -- Main Window
 local window = Instance.new("Frame")
-window.Size = UDim2.new(0, 380, 0, 280)
-window.Position = UDim2.new(0.5, -190, 0.5, -140)
+window.Size = UDim2.new(0, 350, 0, 260)
+window.Position = UDim2.new(0.5, -175, 0.5, -130)
 window.BackgroundColor3 = Color3.fromRGB(18, 18, 24)
 window.BackgroundTransparency = 0
 window.BorderSizePixel = 0
 window.Parent = gui
+window.Visible = true
 
 local corner = Instance.new("UICorner")
 corner.CornerRadius = UDim.new(0, 12)
@@ -42,18 +51,19 @@ title.Position = UDim2.new(0, 15, 0, 0)
 title.BackgroundTransparency = 1
 title.Text = "CRACKUJIN"
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
-title.TextSize = 22
+title.TextSize = 20
 title.Font = Enum.Font.GothamBold
 title.TextXAlignment = Enum.TextXAlignment.Left
 title.Parent = titleBar
 
+-- Close Button
 local close = Instance.new("TextButton")
-close.Size = UDim2.new(0, 32, 0, 32)
-close.Position = UDim2.new(1, -40, 0, 6)
+close.Size = UDim2.new(0, 30, 0, 30)
+close.Position = UDim2.new(1, -38, 0, 8)
 close.BackgroundColor3 = Color3.fromRGB(255, 50, 100)
-close.Text = "✕"
+close.Text = "X"
 close.TextColor3 = Color3.fromRGB(255, 255, 255)
-close.TextSize = 16
+close.TextSize = 14
 close.Font = Enum.Font.GothamBold
 close.Parent = titleBar
 close.MouseButton1Click:Connect(function() gui:Destroy() end)
@@ -62,19 +72,19 @@ local closeCorner = Instance.new("UICorner")
 closeCorner.CornerRadius = UDim.new(0, 6)
 closeCorner.Parent = close
 
--- Key Display (shows what key to enter)
+-- Key Display Box
 local keyDisplay = Instance.new("TextLabel")
 keyDisplay.Size = UDim2.new(0.9, 0, 0, 35)
 keyDisplay.Position = UDim2.new(0.05, 0, 0, 60)
 keyDisplay.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
 keyDisplay.Text = "KEY: " .. CORRECT_KEY
 keyDisplay.TextColor3 = Color3.fromRGB(255, 100, 200)
-keyDisplay.TextSize = 13
+keyDisplay.TextSize = 12
 keyDisplay.Font = Enum.Font.GothamBold
 keyDisplay.Parent = window
 
 local keyDisplayCorner = Instance.new("UICorner")
-keyDisplayCorner.CornerRadius = UDim.new(0, 8)
+keyDisplayCorner.CornerRadius = UDim.new(0, 6)
 keyDisplayCorner.Parent = keyDisplay
 
 -- Instruction
@@ -83,36 +93,36 @@ instruction.Size = UDim2.new(1, -20, 0, 25)
 instruction.Position = UDim2.new(0, 10, 0, 105)
 instruction.BackgroundTransparency = 1
 instruction.Text = "Enter the key below to activate"
-instruction.TextColor3 = Color3.fromRGB(200, 200, 200)
-instruction.TextSize = 12
+instruction.TextColor3 = Color3.fromRGB(180, 180, 180)
+instruction.TextSize = 11
 instruction.Font = Enum.Font.Gotham
 instruction.Parent = window
 
 -- Key Input Box
 local keyBox = Instance.new("TextBox")
-keyBox.Size = UDim2.new(0.8, 0, 0, 42)
+keyBox.Size = UDim2.new(0.8, 0, 0, 40)
 keyBox.Position = UDim2.new(0.1, 0, 0, 135)
 keyBox.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
 keyBox.Text = ""
 keyBox.PlaceholderText = "Enter key here"
 keyBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 keyBox.PlaceholderColor3 = Color3.fromRGB(150, 150, 160)
-keyBox.TextSize = 14
+keyBox.TextSize = 13
 keyBox.Font = Enum.Font.Gotham
 keyBox.Parent = window
 
 local boxCorner = Instance.new("UICorner")
-boxCorner.CornerRadius = UDim.new(0, 8)
+boxCorner.CornerRadius = UDim.new(0, 6)
 boxCorner.Parent = keyBox
 
 -- Copy Button
 local copyBtn = Instance.new("TextButton")
-copyBtn.Size = UDim2.new(0.3, 0, 0, 35)
-copyBtn.Position = UDim2.new(0.35, 0, 0, 190)
+copyBtn.Size = UDim2.new(0.3, 0, 0, 32)
+copyBtn.Position = UDim2.new(0.35, 0, 0, 185)
 copyBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 120)
 copyBtn.Text = "COPY KEY"
 copyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-copyBtn.TextSize = 12
+copyBtn.TextSize = 11
 copyBtn.Font = Enum.Font.GothamBold
 copyBtn.Parent = window
 
@@ -123,35 +133,35 @@ copyCorner.Parent = copyBtn
 copyBtn.MouseButton1Click:Connect(function()
     setclipboard(CORRECT_KEY)
     copyBtn.Text = "COPIED!"
-    wait(1)
+    task.wait(1)
     copyBtn.Text = "COPY KEY"
 end)
 
 -- Status Label
 local statusLabel = Instance.new("TextLabel")
 statusLabel.Size = UDim2.new(1, -20, 0, 25)
-statusLabel.Position = UDim2.new(0, 10, 0, 235)
+statusLabel.Position = UDim2.new(0, 10, 0, 225)
 statusLabel.BackgroundTransparency = 1
 statusLabel.Text = "Waiting for key..."
 statusLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-statusLabel.TextSize = 12
+statusLabel.TextSize = 11
 statusLabel.Font = Enum.Font.Gotham
 statusLabel.Parent = window
 
 -- Activate Button
 local activateBtn = Instance.new("TextButton")
-activateBtn.Size = UDim2.new(0.5, 0, 0, 42)
-activateBtn.Position = UDim2.new(0.25, 0, 0, 265)
+activateBtn.Size = UDim2.new(0.5, 0, 0, 40)
+activateBtn.Position = UDim2.new(0.25, 0, 0, 255)
 activateBtn.BackgroundColor3 = Color3.fromRGB(255, 80, 200)
 activateBtn.BackgroundTransparency = 0.2
 activateBtn.Text = "ACTIVATE"
 activateBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-activateBtn.TextSize = 16
+activateBtn.TextSize = 14
 activateBtn.Font = Enum.Font.GothamBold
 activateBtn.Parent = window
 
 local activateCorner = Instance.new("UICorner")
-activateCorner.CornerRadius = UDim.new(0, 8)
+activateCorner.CornerRadius = UDim.new(0, 6)
 activateCorner.Parent = activateBtn
 
 -- Activate function
@@ -205,7 +215,11 @@ game:GetService("UserInputService").InputChanged:Connect(function(input)
     end
 end)
 
-print("========================================")
-print("CRACKUJIN KEY SYSTEM")
-print("KEY: " .. CORRECT_KEY)
-print("========================================")
+-- Print to console for debugging
+print("[Crackujin] Key System Loaded on CoreGui")
+print("[Crackujin] Key: " .. CORRECT_KEY)
+print("[Crackujin] Main Script URL: " .. MAIN_SCRIPT_URL)
+
+-- Make sure GUI is visible
+window.Visible = true
+gui.Enabled = true
